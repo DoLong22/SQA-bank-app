@@ -31,8 +31,11 @@ export function validEmail(value) {
     return /\S+@\S+\.\S+/.test(value) || 'Email không hợp lệ';
 }
 export function validPhone(value) {
-    if (value) {
-        return /(84|0[3|5|7|8|9])+([0-9]{8})\b/.test(value) || 'Số điện thoại không hợp lệ';
+    return /(84|0[3|5|7|8|9])+([0-9]{8})\b/.test(value) || 'Số điện thoại không hợp lệ';
+}
+export function validMoney(value) {
+    if (+value < 0) {
+        return 'Số tiền phải lớn hơn 0';
     }
-    return true;
+    return !isNaN(value) || 'Số tiền bắt buộc là một dãy số!';
 }
