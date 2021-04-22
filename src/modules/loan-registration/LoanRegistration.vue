@@ -83,13 +83,9 @@
     </v-form>
     <v-card-actions>
       <v-spacer />
-      <v-btn color="blue" @click="close">
-        Cancel
-      </v-btn>
+      <v-btn color="blue" @click="close"> Cancel </v-btn>
       <v-spacer />
-      <v-btn color="success" @click="save">
-        Đăng kí
-      </v-btn>
+      <v-btn color="success" @click="save"> Đăng kí </v-btn>
       <v-spacer />
     </v-card-actions>
   </v-card>
@@ -109,7 +105,6 @@ export default {
       type: String,
       default: "Đăng ký thông tin",
     },
-
   },
   data() {
     return {
@@ -145,13 +140,14 @@ export default {
   methods: {
     close() {
       this.$refs.form.reset();
-    //   this.$emit("close", false);
+      //   this.$emit("close", false);
     },
     save() {
       console.log(this.informPersonal);
-    //   if (this.$refs.form.validate()) {
-    //     this.$emit("save", true);
-    //   }
+      console.log(this.$refs.form.validate());
+      //   if (this.$refs.form.validate()) {
+      //     this.$emit("save", true);
+      //   }
     },
     allowedDate(val) {
       return new Date(val) <= new Date();

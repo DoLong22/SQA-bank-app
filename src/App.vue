@@ -14,8 +14,5 @@ export default {
 };
 </script>
 <style scoped>
-*{
-  color: rgba(0, 0, 0, 0.87);
-}
 
 </style>

@@ -2,9 +2,8 @@
   <v-form ref="form" v-model="valid" lazy-validation>
     <v-card-text>
       <v-container>
-        <v-subheader class="subheader">
-          Thông tin cá nhân
-        </v-subheader>
+        <v-subheader class="subheader"> Thông tin cá nhân </v-subheader>
+        <v-divider></v-divider>
         <v-row class="justify-space-between">
           <v-col cols="12" sm="6" md="5">
             <v-text-field
@@ -17,7 +16,37 @@
             />
           </v-col>
           <v-col cols="12" sm="6" md="5">
-            <v-select outlined
+            <v-menu
+              v-model="menuBirthday"
+              :close-on-content-click="false"
+              :nudge-right="40"
+              transition="scale-transition"
+              offset-y
+              min-width="290px"
+            >
+              <template v-slot:activator="{ on, attrs }">
+                <v-text-field
+                  outlined
+                  v-model="informPersonal.birthday"
+                  label="Ngày sinh *"
+                  prepend-icon="mdi-calendar"
+                  required
+                  :rules="requiredRules"
+                  v-bind="attrs"
+                  v-on="on"
+                />
+              </template>
+              <v-date-picker
+                :allowed-dates="allowedDate"
+                v-model="informPersonal.birthday"
+              />
+            </v-menu>
+          </v-col>
+        </v-row>
+        <v-row class="justify-space-between">
+          <v-col cols="12" sm="6" md="5">
+            <v-select
+              outlined
               v-model="informPersonal.gender"
               item-text="name"
               item-value="value"
@@ -26,103 +55,102 @@
             />
           </v-col>
         </v-row>
+        <v-subheader class="subheader"> Thông tin chứng minh thư </v-subheader>
+        <v-divider></v-divider>
         <v-row class="justify-space-between">
           <v-col cols="12" sm="6" md="5">
-            <v-text-field filled
-              v-model="informPersonal.birthday"
+            <v-text-field
+              outlined
+              readonly
+              v-model="informPersonal.identity.code"
+              :counter="12"
+              label="Số chứng minh thư/thẻ căn cước * "
+              required
+              :rules="identityRules"
+            />
+          </v-col>
+          <v-col cols="12" sm="6" md="5">
+            <v-menu
+              v-model="menu"
+              :close-on-content-click="false"
+              :nudge-right="40"
+              transition="scale-transition"
+              offset-y
+              min-width="290px"
+            >
+              <template v-slot:activator="{ on, attrs }">
+                <v-text-field
+                  outlined
+                  v-model="informPersonal.identity.createdAt"
+                  label="Ngày cấp *"
+                  required
+                  :rules="requiredRules"
+                  prepend-icon="mdi-calendar"
+                  v-bind="attrs"
+                  v-on="on"
+                />
+              </template>
+              <v-date-picker
+                :allowed-dates="allowedDate"
+                v-model="informPersonal.identity.createdAt"
+              />
+            </v-menu>
+          </v-col>
+        </v-row>
+        <v-row class="justify-space-between">
+          <v-col cols="12" sm="6" md="5">
+            <v-text-field
+              outlined
+              v-model="informPersonal.identity.createdFrom"
+              label="Nơi cấp *"
+              required
+              :rules="nameRules"
+            />
+          </v-col>
+        </v-row>
+        <v-subheader class="subheader"> Thông tin công việc </v-subheader>
+        <v-divider></v-divider>
+        <v-row class="justify-space-between">
+          <v-col cols="12" sm="6" md="5">
+            <v-text-field
+              outlined
+              v-model="informPersonal.job"
               :counter="255"
-              label="Ngày sinh"
+              label="Công việc *"
+              readonly
               required
               :rules="nameRules"
             />
           </v-col>
           <v-col cols="12" sm="6" md="5">
-            <v-text-field
-              v-model="informPersonal.birthday"
-              :counter="255"
-              label="Địa chỉ"
+            <v-select
+              outlined
+              readonly
+              v-model="informPersonal.salary"
+              item-text="name"
+              item-value="value"
+              :items="salarys"
               required
-              :rules="nameRules"
+              :rules="requiredRules"
+              label="Thu nhập hiện tại *"
             />
           </v-col>
         </v-row>
         <v-row class="justify-space-between">
           <v-col cols="12" sm="6" md="5">
             <v-text-field
-              v-model="informPersonal.birthday"
-              :counter="255"
-              label="Công việc"
+              outlined
+              v-model="informPersonal.nameCompany"
+              label="Tên công ty *"
               required
               :rules="nameRules"
             />
           </v-col>
           <v-col cols="12" sm="6" md="5">
             <v-text-field
-              v-model="informPersonal.birthday"
-              :counter="255"
-              label="Thu nhập"
-              required
-              :rules="nameRules"
-            />
-          </v-col>
-        </v-row>
-        <v-row class="justify-space-between">
-          <v-col cols="12" sm="6" md="5">
-            <v-text-field
-              v-model="informPersonal.birthday"
-              :counter="255"
-              label="Tên công ty"
-              required
-              :rules="nameRules"
-            />
-          </v-col>
-          <v-col cols="12" sm="6" md="5">
-            <v-text-field
-              v-model="informPersonal.birthday"
-              :counter="255"
+              outlined
+              v-model="informPersonal.department"
               label="Phòng ban"
-              required
-              :rules="nameRules"
-            />
-          </v-col>
-        </v-row>
-        <v-row class="justify-space-between">
-          <v-col cols="12" sm="6" md="5">
-            <v-text-field
-              v-model="informPersonal.birthday"
-              :counter="255"
-              label="Số chứng minh thư/thẻ căn cước "
-              required
-              :rules="nameRules"
-            />
-          </v-col>
-          <v-col cols="12" sm="6" md="5">
-            <v-text-field
-              v-model="informPersonal.birthday"
-              :counter="255"
-              label="Ngày cấp"
-              required
-              :rules="nameRules"
-            />
-          </v-col>
-        </v-row>
-        <v-row class="justify-space-between">
-          <v-col cols="12" sm="6" md="5">
-            <v-text-field
-              v-model="informPersonal.birthday"
-              :counter="255"
-              label="Nơi cấp "
-              required
-              :rules="nameRules"
-            />
-          </v-col>
-          <v-col cols="12" sm="6" md="5">
-            <v-text-field
-              v-model="informPersonal.birthday"
-              :counter="255"
-              label="Ngày cấp"
-              required
-              :rules="nameRules"
             />
           </v-col>
         </v-row>
@@ -137,48 +165,38 @@ import * as check from "../../../helper/Validation";
 export default {
   name: "PersonalInformation",
   props: {
-    editedItem: {
+    informPersonal: {
       type: Object,
       default: () => {},
-    },
-    isUpdate: {
-      type: Boolean,
-      default: true,
-    },
-    cardTitle: {
-      type: String,
-      default: "New Item",
-    },
-    isDisplayDetail: {
-      type: Boolean,
-      default: false,
     },
   },
   data() {
     return {
-      informPersonal: {
-        name: "",
-        hometown: "",
-        birthday: "",
-        gender: "",
-        job: "",
-        salary: "",
-        identity: {
-          id: "",
-          createdFrom: "",
-          createdAt: "",
-        },
-      },
+      salarys: [
+        { name: "Dưới 3 triệu", value: "Dưới 3 triệu" },
+        { name: "Từ 3 đến 5 triệu", value: "Từ 3 đến 5 triệu" },
+        { name: "Từ 5 đến 10 triệu", value: "Từ 5 đến 10 triệu" },
+        { name: "Từ 10 đến 15 triệu", value: "Từ 10 đến 15 triệu" },
+        { name: "Từ 15 đến 20 triệu", value: "Từ 15 đến 20 triệu" },
+        { name: "Trên 20 triệu", value: "Trên 20 triệu" },
+      ],
       itemsGender: [
         { name: "Orther", value: "orther" },
         { name: "Female", value: "female" },
         { name: "Male", value: "male" },
       ],
       menu: false,
+      menuBirthday: false,
       nameRules: [
         (value) => check.validRequired(value),
         (value) => check.validLengthMax(value, 255),
       ],
+      identityRules: [
+        (value) => check.validRequired(value),
+        (value) => check.isNumber(value),
+        (value) => check.validIdentity(value),
+      ],
+      requiredRules: [(value) => check.validRequired(value)],
       valid: false,
     };
   },
@@ -200,8 +218,11 @@ export default {
 </script>
 
 <style scoped>
-.subheader{
+.subheader {
   font-size: 20px;
-  text-decoration: underline;
+}
+hr {
+  margin-bottom: 3rem;
+  margin-top: 0rem;
 }
 </style>

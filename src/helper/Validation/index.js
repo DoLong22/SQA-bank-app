@@ -32,7 +32,7 @@ export function validEmail(value) {
 }
 export function validPhone(value) {
     if (value) {
-        return /^(09|01[2|6|8|9])+([0-9]{7,8})\b$/.test(value) || 'Số điện thoại  không hợp lệ';
+        return /(84|0[3|5|7|8|9])+([0-9]{8})\b/.test(value) || 'Số điện thoại không hợp lệ';
     }
     return true;
 }
