@@ -28,9 +28,9 @@
               ref="personalInform"
             />
           </v-card>
-          <v-btn text> Cancel </v-btn>
+          <v-btn elevation="2" text> Hủy </v-btn>
           <v-btn color="primary" @click="isValidPersonalInform">
-            Continue
+            Tiếp tục
           </v-btn>
         </v-stepper-content>
 
@@ -41,9 +41,9 @@
               ref="contactInform"
             />
           </v-card>
-          <v-btn text @click="e1 = 1"> Back </v-btn>
+          <v-btn text @click="e1 = 1"> Trở lại </v-btn>
           <v-btn color="primary" @click="isValidContactInform">
-            Continue
+            Tiếp tục
           </v-btn>
         </v-stepper-content>
 
@@ -54,9 +54,9 @@
               ref="protectorsInform"
             />
           </v-card>
-          <v-btn text @click="e1 = 2"> Back </v-btn>
+          <v-btn text @click="e1 = 2"> Trở lại </v-btn>
           <v-btn color="primary" @click="isValidProtectorsInform">
-            Continue
+            Tiếp tục
           </v-btn>
         </v-stepper-content>
       </v-stepper-items>

@@ -9,6 +9,7 @@
           <v-row>
             <v-col>
               <v-text-field
+                outlined
                 v-model="informPersonal.name"
                 :counter="255"
                 label="Họ tên *"
@@ -29,9 +30,10 @@
               >
                 <template v-slot:activator="{ on, attrs }">
                   <v-text-field
+                    outlined
                     v-model="informPersonal.birthday"
                     label="Ngày sinh"
-                    prepend-icon="mdi-calendar"
+                    append-icon="mdi-calendar"
                     readonly
                     v-bind="attrs"
                     v-on="on"
@@ -47,6 +49,7 @@
           <v-row>
             <v-col>
               <v-text-field
+                outlined
                 v-model="informPersonal.identity"
                 :counter="12"
                 label="Số chứng minh thư/ Căn cước công dân *"
@@ -58,6 +61,7 @@
           <v-row>
             <v-col>
               <v-text-field
+                outlined
                 v-model="informPersonal.job"
                 label="Công việc hiện tại *"
                 required
@@ -68,6 +72,7 @@
           <v-row>
             <v-col>
               <v-select
+                outlined
                 v-model="informPersonal.salary"
                 item-text="name"
                 item-value="value"
@@ -83,7 +88,7 @@
     </v-form>
     <v-card-actions>
       <v-spacer />
-      <v-btn color="blue" @click="close"> Cancel </v-btn>
+      <v-btn elevation="2" text @click="close"> Hủy </v-btn>
       <v-spacer />
       <v-btn color="success" @click="save"> Đăng kí </v-btn>
       <v-spacer />

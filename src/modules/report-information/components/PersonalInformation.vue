@@ -29,7 +29,7 @@
                   outlined
                   v-model="informPersonal.birthday"
                   label="Ngày sinh *"
-                  prepend-icon="mdi-calendar"
+                  append-icon="mdi-calendar"
                   required
                   :rules="requiredRules"
                   v-bind="attrs"
@@ -85,7 +85,7 @@
                   label="Ngày cấp *"
                   required
                   :rules="requiredRules"
-                  prepend-icon="mdi-calendar"
+                  append-icon="mdi-calendar"
                   v-bind="attrs"
                   v-on="on"
                 />
