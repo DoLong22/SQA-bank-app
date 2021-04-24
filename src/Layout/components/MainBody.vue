@@ -1,9 +1,9 @@
 <template>
   <v-container>
     <v-row align="center" justify="center" no-gutters>
-      <v-col cols="10">
-        <router-view></router-view>
-      </v-col>
+      <!-- <v-col cols="10"> -->
+      <router-view></router-view>
+      <!-- </v-col> -->
     </v-row>
   </v-container>
 </template>
@@ -12,5 +12,8 @@
 export default {};
 </script>
 
-<style>
+<style scoped>
+.container {
+  max-width: 1200px;
+}
 </style>

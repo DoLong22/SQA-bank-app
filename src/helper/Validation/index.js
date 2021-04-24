@@ -1,5 +1,5 @@
-export function validRequired(value) {
-    return !!value || 'Trường thông tin này bắt buộc!';
+export function validRequired(value, message = 'Trường thông tin này bắt buộc!') {
+    return !!value || message;
 }
 export function validIdentity(value) {
     if (!value) {
@@ -34,8 +34,8 @@ export function validPhone(value) {
     return /(84|0[3|5|7|8|9])+([0-9]{8})\b/.test(value) || 'Số điện thoại không hợp lệ';
 }
 export function validMoney(value) {
-    if (+value < 0) {
-        return 'Số tiền phải lớn hơn 0';
+    if (+value < 1000000) {
+        return 'Số tiền phải lớn hơn 1.000.000';
     }
     return !isNaN(value) || 'Số tiền bắt buộc là một dãy số!';
 }
