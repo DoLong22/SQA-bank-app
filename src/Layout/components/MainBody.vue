@@ -9,7 +9,13 @@
 </template>
 
 <script>
-export default {};
+export default {
+  methods: {
+    helloWord() {
+      console.log("Hello word");
+    },
+  },
+};
 </script>
 
 <style scoped>
