@@ -9,6 +9,7 @@
             <v-text-field
               outlined
               v-model="informPersonal.name"
+              :readonly="informPersonal.name.length != ''"
               :counter="255"
               label="Họ tên *"
               required
@@ -28,6 +29,7 @@
                 <v-text-field
                   outlined
                   v-model="informPersonal.birthday"
+                  :readonly="informPersonal.birthday.length != ''"
                   label="Ngày sinh *"
                   append-icon="mdi-calendar"
                   required
@@ -61,8 +63,8 @@
           <v-col cols="12" sm="6" md="5">
             <v-text-field
               outlined
-              readonly
-              v-model="informPersonal.identity.code"
+              v-model="informPersonal.identityCode"
+              :readonly="informPersonal.identityCode.length != ''"
               :counter="12"
               label="Số chứng minh thư/thẻ căn cước * "
               required
@@ -81,7 +83,7 @@
               <template v-slot:activator="{ on, attrs }">
                 <v-text-field
                   outlined
-                  v-model="informPersonal.identity.createdAt"
+                  v-model="informPersonal.identityCreatedAt"
                   label="Ngày cấp *"
                   required
                   :rules="requiredRules"
@@ -92,7 +94,7 @@
               </template>
               <v-date-picker
                 :allowed-dates="allowedDate"
-                v-model="informPersonal.identity.createdAt"
+                v-model="informPersonal.identityCreatedAt"
               />
             </v-menu>
           </v-col>
@@ -101,7 +103,7 @@
           <v-col cols="12" sm="6" md="5">
             <v-text-field
               outlined
-              v-model="informPersonal.identity.createdFrom"
+              v-model="informPersonal.identityCreatedFrom"
               label="Nơi cấp *"
               required
               :rules="nameRules"
@@ -115,9 +117,9 @@
             <v-text-field
               outlined
               v-model="informPersonal.job"
+              :readonly="informPersonal.job.length != ''"
               :counter="255"
               label="Công việc *"
-              readonly
               required
               :rules="nameRules"
             />
@@ -125,8 +127,8 @@
           <v-col cols="12" sm="6" md="5">
             <v-select
               outlined
-              readonly
               v-model="informPersonal.salary"
+              :readonly="informPersonal.salary.length != ''"
               item-text="name"
               item-value="value"
               :items="salarys"
@@ -150,7 +152,9 @@
             <v-text-field
               outlined
               v-model="informPersonal.department"
-              label="Phòng ban"
+              label="Phòng ban *"
+              required
+              :rules="nameRules"
             />
           </v-col>
         </v-row>
@@ -160,8 +164,7 @@
 </template>
 
 <script>
-import * as check from "../../../helper/Validation";
-
+import * as check from "../../../helper/validation";
 export default {
   name: "PersonalInformation",
   props: {

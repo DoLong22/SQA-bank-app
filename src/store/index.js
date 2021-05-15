@@ -5,44 +5,107 @@ Vue.use(Vuex);
 
 const plugins = [];
 
-// set root state, action & mutation
 const rootState = {
-    showLoadingIndicator: false,
-    barColor: 'rgba(0, 0, 0, .8), rgba(0, 0, 0, .8)',
-    barImage: 'https://demos.creative-tim.com/material-dashboard-pro/assets/img/sidebar-1.jpg',
-    drawer: null,
+  notification: {
+    isDisplay: false,
+    message: 'Notification',
+    type: 'success',
+    timeOut: 2000,
+  },
+  informationPersonal: {
+    informPersonal: {
+      name: '',
+      birthday: '',
+      gender: '',
+      job: '',
+      nameCompany: '',
+      department: '',
+      salary: '',
+      identityCode: '',
+      identityCreatedFrom: '',
+      identityCreatedAt: '',
+    },
+    informContact: {
+      email: '',
+      phone: '',
+      address: '',
+      hometown: '',
+    },
+    informProtector: {
+      nameProtector: '',
+      phoneProtector: '',
+      addressProtector: '',
+    },
+  },
+  informationPersonalDefault: {
+    informPersonal: {
+      name: '',
+      birthday: '',
+      gender: '',
+      job: '',
+      nameCompany: '',
+      department: '',
+      salary: '',
+      identityCode: '',
+      identityCreatedFrom: '',
+      identityCreatedAt: '',
+    },
+    informContact: {
+      email: '',
+      phone: '',
+      address: '',
+      hometown: '',
+    },
+    informProtector: {
+      nameProtector: '',
+      phoneProtector: '',
+      addressProtector: '',
+    },
+  },
 };
 const rootActions = {
-    setLoadingIndicator(context, showLoadingIndicator) {
-        context.commit('SET_SHOW_LOADING_INDICATOR', showLoadingIndicator);
-    },
-    setCurrentLang(context, currentLang) {
-        context.commit('SET_CURRENT_LANG', currentLang);
-    },
+  displayNotification({ commit }, payload) {
+    commit('DISPLAY_NOTIFICATION', payload);
+  },
+  hiddenNotification({ commit }) {
+    commit('HIDDEN_NOTIFICATION');
+  },
+  setInformation({ commit }, informationPersonal) {
+    commit('SET_INFORMATION', informationPersonal);
+  },
+  resetInformation({commit,state}){
+    commit('SET_INFORMATION',state.informationPersonalDefault)
+  }
 };
 const rootMutations = {
-    SET_SHOW_LOADING_INDICATOR(state, showLoadingIndicator) {
-        state.showLoadingIndicator = showLoadingIndicator;
-    },
-    SET_BAR_IMAGE(state, payload) {
-        state.barImage = payload;
-    },
-    SET_DRAWER(state, payload) {
-        state.drawer = payload;
-    },
-    SET_SCRIM(state, payload) {
-        state.barColor = payload;
-    },
-    SET_CURRENT_LANG(state, currentLang) {
-        state.currentLang = currentLang;
-    },
+  DISPLAY_NOTIFICATION(state, notification) {
+    state.notification = notification;
+  },
+  HIDDEN_NOTIFICATION(state) {
+    state.notification = { ...state.notification, isDisplay: false };
+  },
+  SET_INFORMATION(state, information) {
+    state.informationPersonal = {
+      ...state.informationPersonal,
+      ...information,
+    };
+  },
+  SET_INFORMATION_PERSONAL(state, informPersonal) {
+    state.informationPersonal.informPersonal = {
+      ...state.informationPersonal.informPersonal,
+      ...informPersonal,
+    };
+  },
 };
-
+const getters = {
+  getInformationPersonal(state) {
+    return state.informationPersonal;
+  },
+};
 export default new Vuex.Store({
-    modules: {
-    },
-    state: rootState,
-    mutations: rootMutations,
-    actions: rootActions,
-    plugins,
+  state: rootState,
+  mutations: rootMutations,
+  actions: rootActions,
+  getters,
+  plugins,
 });

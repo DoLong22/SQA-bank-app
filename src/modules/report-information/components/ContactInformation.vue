@@ -51,7 +51,7 @@
 </template>
 
 <script>
-import * as check from "../../../helper/Validation";
+import * as check from "../../../helper/validation";
 
 export default {
   name: "ContactInformation",

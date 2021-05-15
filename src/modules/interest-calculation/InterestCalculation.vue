@@ -1,9 +1,11 @@
 <template>
   <v-container>
     <v-row>
-      <v-col></v-col>
-      <v-col
-        ><v-card class="container">
+      <v-col md="6" sm="4" xm="1"
+        ><img class="bg-image" src="../../assets/logo.png" alt=""
+      /></v-col>
+      <v-col md="6" sm="4" xm="2">
+        <v-card class="container">
           <v-card-title class="justify-center">
             <span class="font-weight-regular display-2">Tính lãi</span>
           </v-card-title>
@@ -27,7 +29,7 @@
                       v-model="interestType"
                       item-text="name"
                       item-value="value"
-                      :items="interestType"
+                      :items="interestTypes"
                       required
                       :rules="interestTypeRules"
                       label="Kiểu tính lãi"
@@ -38,7 +40,7 @@
                   <v-col>
                     <v-select
                       outlined
-                      v-model="month"
+                      v-model="numOfMonths"
                       item-text="name"
                       item-value="month"
                       :items="loanTime"
@@ -61,7 +63,7 @@
                     <v-text-field
                       outlined
                       readonly
-                      :value="principalPerMonth"
+                      :value="loanPerMonth"
                       label="Tiền gốc phải trả hàng tháng"
                     />
                   </v-col>
@@ -91,32 +93,33 @@
             <v-spacer />
             <v-btn color="success" @click="interestCalculate">Kết quả</v-btn>
             <v-spacer />
-          </v-card-actions> </v-card
-      ></v-col>
+          </v-card-actions>
+        </v-card>
+      </v-col>
     </v-row>
-    <v-row> <Table /></v-row>
+    <v-row> <Table v-if="isDisplayTable" :data="dataPayment" /></v-row>
   </v-container>
 </template>
 
 <script>
-import * as check from "../../helper/Validation";
+import * as check from "../../helper/validation";
 import { interestRate } from "./constance";
-import {
-  principalPerMonthByOriginal,
-  interestPerMonthByOriginal,
-  totalPerMonthByOriginal,
-} from "./services";
-import Table from "../../components/Table.vue";
+import Table from "./components/Table.vue";
+import LoanService from "../../service/loan.service";
+import { formatDate } from "../../helper/format-date";
 
 export default {
   components: { Table },
   name: "InterestCalcultion",
   data() {
     return {
+      dataPayment: [],
+      isDisplayTable: false,
       loan: "",
-      month: 0,
+      numOfMonths: 0,
+      interestType: 1,
       interestPerMonth: "",
-      principalPerMonth: "",
+      loanPerMonth: "",
       totalPerMonth: "",
       loanTime: [
         { name: "1 tháng", month: 1 },
@@ -129,9 +132,9 @@ export default {
         { name: "48 tháng", month: 48 },
         { name: "60 tháng", month: 60 },
       ],
-      interestType: [
-        { name: "Tính theo dự nợ giảm dần", value: 0 },
-        { name: "Tính theo dự nợ ban đầu", value: 1 },
+      interestTypes: [
+        { name: "Tính theo dự nợ giảm dần", value: 1 },
+        { name: "Tính theo dự nợ ban đầu", value: 2 },
       ],
       loanRules: [(value) => check.validMoney(value)],
       nameRules: [
@@ -155,24 +158,38 @@ export default {
   },
   computed: {
     interestRate() {
-      console.log(interestRate[`${this.month}`]);
-      return interestRate[`${this.month}`];
+      return interestRate[`${this.numOfMonths}`];
     },
   },
   methods: {
-    interestCalculate() {
-      const rate = interestRate[`${this.month}`];
-      console.log(rate);
-      this.principalPerMonth = principalPerMonthByOriginal(
-        this.month,
-        this.loan
-      );
-      this.interestPerMonth = interestPerMonthByOriginal(
-        this.month,
-        this.loan,
-        rate
-      );
-      this.totalPerMonth = totalPerMonthByOriginal(this.loan, rate);
+    async interestCalculate() {
+      if (this.$refs.form.validate()) {
+        const data = {
+          loan: this.loan,
+          interestRate: this.interestRate,
+          interestType: this.interestType,
+          numOfMonths: this.numOfMonths,
+          dateOfLoan: formatDate(new Date()),
+        };
+        try {
+          if (this.interestType === 1) {
+            console.log("come here");
+            this.dataPayment = await LoanService.calFollowDecreasing(data);
+            this.isDisplayTable = true;
+            return;
+          } else {
+            this.isDisplayTable = false;
+            console.log(data);
+            const response = await LoanService.calFollowOriginal(data);
+            this.loanPerMonth = response.loan.loanPerMonth;
+            this.totalPerMonth = response.totalPerMonth;
+            this.interestPerMonth = response.interest;
+            console.log(response);
+          }
+        } catch (error) {
+          console.log(error);
+        }
+      }
     },
   },
 };
@@ -181,5 +198,9 @@ export default {
 <style scoped>
 .container {
   max-width: 100%;
+}
+.bg-image {
+  max-width: 100%;
+  height: 100%;
 }
 </style>

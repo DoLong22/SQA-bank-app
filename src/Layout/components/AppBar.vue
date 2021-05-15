@@ -32,7 +32,6 @@
     <v-btn href="/blog" disabled>
       <span>Giới thiệu</span>
     </v-btn>
-    <!-- </v-app-bar> -->
   </v-bottom-navigation>
 </template>
 
@@ -41,7 +40,7 @@ export default {
   name: "AppBar",
   data: () => ({
     options: [
-      { title: "Đăng ký", link: "/loan-registration" },
+      { title: "Đăng ký", link: "/registration" },
       { title: "Khai báo thông tin", link: "/report-information" },
       { title: "Vay lãi", link: "/interest-loans" },
       { title: "Trả tiền cho ngân hàng", link: "/pay-the-loan" },

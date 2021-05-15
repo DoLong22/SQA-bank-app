@@ -1,28 +1,34 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
 
-import ReportInformation from '../modules/report-information/ReportInformation.vue';
-import InterestCalculation from '../modules/interest-calculation/InterestCalculation.vue';
-import LoanRegistration from '../modules/loan-registration/LoanRegistration.vue'
-import MainLayout from '../Layout/MainLayout.vue'
+import {
+  ReportInformation,
+  InterestCalculation,
+  Registration,
+  InterestLoans,
+  BorrowerInformation,
+} from '../modules';
+import MainLayout from '../Layout/MainLayout.vue';
 // routers
 Vue.use(VueRouter);
 
 const routes = [
-    {
-        path: '/',
-        redirect: '/loan-registration',
-        component: MainLayout,
-        children: [
-            { path: '/loan-registration', component: LoanRegistration },
-            { path: '/report-information', component: ReportInformation },
-            { path: '/interest-calculation', component: InterestCalculation },
-        ],
-    },
+  {
+    path: '/',
+    redirect: '/registration',
+    component: MainLayout,
+    children: [
+      { path: '/registration', component: Registration },
+      { path: '/report-information', component: ReportInformation },
+      { path: '/interest-calculation', component: InterestCalculation },
+      { path: '/interest-loans', component: InterestLoans },
+      { path: '/interest-loans/register', component: BorrowerInformation },
+    ],
+  },
 ];
 const router = new VueRouter({
-    mode: 'history',
-    routes,
+  mode: 'history',
+  routes,
 });
 
 export default router;
