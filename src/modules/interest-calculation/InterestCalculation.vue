@@ -7,7 +7,7 @@
       <v-col md="6" sm="4" xm="2">
         <v-card class="container">
           <v-card-title class="justify-center">
-            <span class="font-weight-regular display-2">Tính lãi</span>
+            <span class="font-weight-regular display-2">{{ title }}</span>
           </v-card-title>
           <v-form ref="form" v-model="valid" lazy-validation>
             <v-card-text>
@@ -86,12 +86,23 @@
                     />
                   </v-col>
                 </v-row>
+                <v-checkbox
+                  v-if="isBrrower"
+                  v-model="isConfirm"
+                  label="Tôi xác nhận rằng tôi đã đọc và đồng ý với các điều khoản?"
+                  required
+                  :rules="checkboxRules"
+                ></v-checkbox>
               </v-container>
             </v-card-text>
           </v-form>
           <v-card-actions>
             <v-spacer />
-            <v-btn color="success" @click="interestCalculate">Kết quả</v-btn>
+            <v-btn elevation="2" color="success" @click="interestCalculate">Tính thử</v-btn>
+            <v-spacer />
+            <v-btn elevation="2" color="primary" v-if="isBrrower" @click="requestBorrower"
+              >Xác nhận</v-btn
+            >
             <v-spacer />
           </v-card-actions>
         </v-card>
@@ -110,9 +121,12 @@ import { formatDate } from "../../helper/format-date";
 
 export default {
   components: { Table },
-  name: "InterestCalcultion",
+  name: "InterestCalculation",
   data() {
     return {
+      title: "Tính lãi",
+      isConfirm: false,
+      isBrrower: false,
       dataPayment: [],
       isDisplayTable: false,
       loan: "",
@@ -136,6 +150,13 @@ export default {
         { name: "Tính theo dự nợ giảm dần", value: 1 },
         { name: "Tính theo dự nợ ban đầu", value: 2 },
       ],
+      checkboxRules: [
+        (value) => {
+          return (
+            !!value || "Vui lòng xác nhận đã đọc và đồng ý với các điều khoản."
+          );
+        },
+      ],
       loanRules: [(value) => check.validMoney(value)],
       nameRules: [
         (value) => check.validRequired(value),
@@ -156,6 +177,13 @@ export default {
       valid: false,
     };
   },
+  created() {
+    console.log(this.$route.params.id);
+    if (this.$route.path.includes("/interest-loans/report-information")) {
+      this.title = "Thông tin vay";
+      this.isBrrower = true;
+    }
+  },
   computed: {
     interestRate() {
       return interestRate[`${this.numOfMonths}`];
@@ -173,19 +201,39 @@ export default {
         };
         try {
           if (this.interestType === 1) {
-            console.log("come here");
             this.dataPayment = await LoanService.calFollowDecreasing(data);
             this.isDisplayTable = true;
             return;
           } else {
             this.isDisplayTable = false;
-            console.log(data);
             const response = await LoanService.calFollowOriginal(data);
             this.loanPerMonth = response.loan.loanPerMonth;
             this.totalPerMonth = response.totalPerMonth;
             this.interestPerMonth = response.interest;
-            console.log(response);
           }
+        } catch (error) {
+          console.log(error);
+        }
+      }
+    },
+    async requestBorrower() {
+      if (this.$refs.form.validate()) {
+        const data = {
+          loan: this.loan,
+          interestRate: this.interestRate,
+          interestType: this.interestType,
+          numOfMonths: this.numOfMonths,
+          dateOfLoan: formatDate(new Date()),
+          customer: {
+            id: this.$route.params.id,
+          },
+        };
+        try {
+          await LoanService.requestLoan(data);
+          this.$store.dispatch("displayNotification", {
+            isDisplay: true,
+            message: "Vay thành công.",
+          });
         } catch (error) {
           console.log(error);
         }

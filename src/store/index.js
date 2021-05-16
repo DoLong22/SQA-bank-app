@@ -73,9 +73,9 @@ const rootActions = {
   setInformation({ commit }, informationPersonal) {
     commit('SET_INFORMATION', informationPersonal);
   },
-  resetInformation({commit,state}){
-    commit('SET_INFORMATION',state.informationPersonalDefault)
-  }
+  resetInformation({ commit, state }) {
+    commit('SET_INFORMATION', state.informationPersonalDefault);
+  },
 };
 const rootMutations = {
   DISPLAY_NOTIFICATION(state, notification) {

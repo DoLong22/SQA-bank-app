@@ -106,7 +106,7 @@
 
 <script>
 import * as check from "../../helper/validation";
-import  UserService  from "../../service/customer.service";
+import UserService from "../../service/customer.service";
 import Dialog from "../../components/Dialog";
 export default {
   name: "Registration",
@@ -163,7 +163,7 @@ export default {
           await UserService.registration(this.informPersonal);
           this.$store.dispatch("displayNotification", {
             isDisplay: true,
-            message: "Đăng ký thành công.",
+            message: " Đăng ký thành công.",
           });
           this.dialog = true;
           this.message = "Bạn có muốn khai báo thông tin ngay bây giờ không?";
@@ -171,7 +171,8 @@ export default {
       } catch (error) {
         this.$store.dispatch("displayNotification", {
           isDisplay: true,
-          type: "error",
+          // type: "error",
+          type: "alert alert-danger",
           message: "Chứng minh thư đã được đăng ký.",
         });
       }

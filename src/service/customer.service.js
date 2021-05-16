@@ -12,9 +12,14 @@ const reportInformation = (customer) => {
   console.log(customer)
   return axiosInstance.put('/customers/report-information', customer);
 };
+
+const getCustomers = () =>{
+  return axiosInstance.get('/customers');
+}
 const userService = {
   registration,
   reportInformation,
+  getCustomers,
 };
 
 export default userService;

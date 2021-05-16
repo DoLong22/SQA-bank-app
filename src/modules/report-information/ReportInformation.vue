@@ -28,8 +28,8 @@
               ref="informPersonal"
             />
           </v-card>
-          <v-btn elevation="2" text> Hủy </v-btn>
-          <v-btn color="primary" @click="isValidPersonalInform">
+          <v-btn elevation="2" text @click="$router.go(-1)"> Hủy </v-btn>
+          <v-btn elevation="2" color="primary" @click="isValidPersonalInform">
             Tiếp tục
           </v-btn>
         </v-stepper-content>
@@ -41,8 +41,8 @@
               ref="informContact"
             />
           </v-card>
-          <v-btn text @click="e1 = 1"> Trở lại </v-btn>
-          <v-btn color="primary" @click="isValidContactInform">
+          <v-btn elevation="2" text @click="e1 = 1"> Trở lại </v-btn>
+          <v-btn elevation="2" color="primary" @click="isValidContactInform">
             Tiếp tục
           </v-btn>
         </v-stepper-content>
@@ -54,8 +54,8 @@
               ref="informProtector"
             />
           </v-card>
-          <v-btn text @click="e1 = 2"> Trở lại </v-btn>
-          <v-btn color="primary" @click="isValidProtectorsInform">
+          <v-btn elevation="2" text @click="e1 = 2"> Trở lại </v-btn>
+          <v-btn elevation="2" color="primary" @click="isValidProtectorsInform">
             Tiếp tục
           </v-btn>
         </v-stepper-content>

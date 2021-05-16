@@ -6,7 +6,8 @@ import {
   InterestCalculation,
   Registration,
   InterestLoans,
-  BorrowerInformation,
+  ListLoan,
+  ListPayment
 } from '../modules';
 import MainLayout from '../Layout/MainLayout.vue';
 // routers
@@ -22,7 +23,13 @@ const routes = [
       { path: '/report-information', component: ReportInformation },
       { path: '/interest-calculation', component: InterestCalculation },
       { path: '/interest-loans', component: InterestLoans },
-      { path: '/interest-loans/register', component: BorrowerInformation },
+      {
+        path: '/interest-loans/report-information/:id',
+        component: InterestCalculation,
+      },
+      { path: '/pay-the-loan', component: InterestLoans },
+      { path: '/customers/:id/loans', component: ListLoan },
+      { path: '/loans/:id/payments', component: ListPayment },
     ],
   },
 ];

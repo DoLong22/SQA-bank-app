@@ -32,4 +32,41 @@ const calFollowDecreasing = ({
   });
 };
 
-export default { calFollowOriginal, calFollowDecreasing };
+const requestLoan = ({
+  loan,
+  interestRate,
+  interestType,
+  numOfMonths,
+  dateOfLoan,
+  customer,
+}) => {
+  return axiosInstance.post('/loan', {
+    loan,
+    interestRate,
+    interestType,
+    numOfMonths,
+    dateOfLoan,
+    customer,
+  });
+};
+
+const getLoans = (idCustomer) => {
+  return axiosInstance.get(`/customers/${idCustomer}/loans`);
+};
+
+const getPayments = (idLoan) => {
+  return axiosInstance.get(`/loans/${idLoan}/payments`);
+};
+
+const updatePayment = (payment, idLoan) => {
+  return axiosInstance.put(`/loans/${idLoan}/payments`, payment);
+};
+
+export default {
+  calFollowOriginal,
+  calFollowDecreasing,
+  requestLoan,
+  getLoans,
+  getPayments,
+  updatePayment,
+};
