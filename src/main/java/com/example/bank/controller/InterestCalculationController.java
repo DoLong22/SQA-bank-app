@@ -1,51 +1,45 @@
 package com.example.bank.controller;
 
-import com.example.bank.model.GiamDan;
-import com.example.bank.service.InterestCalculationService;
+import com.example.bank.model.LoanInformation;
+import com.example.bank.model.PayInformation;
+import com.example.bank.service.LoanService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
 
-import com .example.bank.model.InterestCalculation;
 @RestController
 @CrossOrigin("*")
 @RequestMapping("/calculation")
 public class InterestCalculationController {
     @Autowired
-    private InterestCalculationService interestCalculationService;
-    @GetMapping("")
-    public InterestCalculation calculation1(){
-        InterestCalculation interestCalculation = interestCalculationService.getCalcu();
+    private LoanService loanService;
 
-        return interestCalculation;
-    }
-
-    @PostMapping("/bandau")
-    public InterestCalculation calculation(@RequestBody InterestCalculation interestCalculation){
-        interestCalculation.setInterestPerMonth((interestCalculation.getLoan()*interestCalculation.getInterestRate()*0.01)/12);
-        interestCalculation.setPrincipalPerMonth(interestCalculation.getLoan()/interestCalculation.getMonth());
-        interestCalculation.setTotalPerMonth(interestCalculation.getInterestPerMonth()+interestCalculation.getPrincipalPerMonth());
-        return interestCalculation;
-
-    }
-
-    @PostMapping("/giamdan")
-    public ResponseEntity<?> calculationGiamdan(@RequestBody InterestCalculation interestCalculation){
-            List<GiamDan> giamDans = new ArrayList<>();
-            for (int i = 0;i <= interestCalculation.getMonth(); i++ ){
-                GiamDan giamDan = new GiamDan();
-                giamDan.setKyTraNo(i);
-                giamDan.setGocConLai(interestCalculation.getLoan()-i*interestCalculation.getLoan()/interestCalculation.getMonth());
-                giamDan.setGoc(interestCalculation.getLoan()/interestCalculation.getMonth());
-                giamDan.setLai(giamDan.getGoc()*interestCalculation.getInterestRate()*0.01*((interestCalculation.getMonth()-i)*0.083));
-                giamDan.setTong(giamDan.getGoc()+giamDan.getLai());
-                giamDans.add(giamDan);
+    @PostMapping(produces = "application/json", value ="/original")
+    public ResponseEntity<?> calculationFollowOriginal(@RequestBody LoanInformation loan){
+        System.out.printf(loan.toString());
+        if(loan.getInterestType() != 2){
+            return new ResponseEntity<>("", HttpStatus.BAD_REQUEST);
         }
-            return   ResponseEntity.ok(giamDans);
+        loan.setLoanPerMonth(Math.round(loan.getLoan()/loan.getNumOfMonths()));
+        return new ResponseEntity<>(this.loanService.calculateLoanByOriginal(loan,1), HttpStatus.OK);
+    }
 
+    @PostMapping(produces = "application/json", value="/decreasing")
+    public ResponseEntity<?> calculationFollowDecreasing(@RequestBody LoanInformation loan){
+        System.out.printf(loan.toString());
+        if(loan.getInterestType() != 1){
+            return new ResponseEntity<>("", HttpStatus.BAD_REQUEST);
+        }
+        loan.setLoanPerMonth(Math.round(loan.getLoan()/loan.getNumOfMonths()));
+        List<PayInformation> pays = this.loanService.calculateLoanByDecreasing(loan);
+        int id=0;
+        for (PayInformation pay:pays) {
+            pay.setId(id++);
+        }
+        return new ResponseEntity<>(pays, HttpStatus.OK);
     }
 }
 

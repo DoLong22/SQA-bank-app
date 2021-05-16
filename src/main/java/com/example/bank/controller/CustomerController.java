@@ -3,58 +3,40 @@ package com.example.bank.controller;
 import com.example.bank.model.Customer;
 import com.example.bank.service.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.xml.ws.Response;
-import java.util.List;
-@RequestMapping("/customer")
 @RestController
+@CrossOrigin("*")
+@RequestMapping("/customers")
 public class CustomerController {
     @Autowired
     private CustomerService customerService;
 
-    @PostMapping("")
-    public Customer addListCustomer(@RequestBody Customer customer){
-        List<Customer> customers = customerService.getCustomerList();
-        customers.add(customer);
-        return customer;
+    @GetMapping(produces = "application/json", value = "")
+    public ResponseEntity<?> getCustomers(){
+        return new ResponseEntity<>(this.customerService.getCustomerList(), HttpStatus.CREATED);
     }
 
-    @GetMapping("")
-    public ResponseEntity<?> getListCustomer(){
-        List<Customer> customers = customerService.getCustomerList();
-        return ResponseEntity.ok(customers);
-    }
-
-    @GetMapping("/{id}")
-    public ResponseEntity<?> getCustomerById(@PathVariable int id){
-        Customer result = customerService.getCustomerById(id);
-        System.out.println(id);
-        return ResponseEntity.ok(result);
-    }
-
-    @GetMapping("/search")
-    public ResponseEntity<?> searchCustomer(@RequestParam(name= "keyword", required = false,defaultValue = "") String keyword){
-        List<Customer> customers = customerService.searchCustomers(keyword);
-
-        return ResponseEntity.ok(customers);
-    }
-
-    @DeleteMapping()
-    public void delete(@RequestParam(name = "id") int id) {
-        List<Customer> customers = customerService.getCustomerList();
-        for (Customer customer : customers){
-            if (customer.getId()==id) {
-                customers.remove(customer);
-                break;
-            }
+    @PostMapping(produces = "application/json", value = "/registration")
+    public ResponseEntity<?> registerCustomer(@RequestBody Customer customer){
+        Customer isCustomerExist = customerService.findCustomerByIdentityCode(customer.getIdentityCode());
+        if(isCustomerExist != null){
+            return new ResponseEntity<>("Identity is exist", HttpStatus.BAD_REQUEST);
         }
+        Customer customerAdded = customerService.registerCustomer(customer);
+
+        return new ResponseEntity<>(customerAdded, HttpStatus.CREATED);
     }
 
-    @PostMapping("/customer")
-    public ResponseEntity<?> creatCustomer(){
-        return null;
+    @PutMapping(produces = "application/json", value="/report-information")
+    public ResponseEntity<?> reportInformation(@RequestBody Customer customer){
+        Customer isCustomerExist = customerService.findCustomerByIdentityCode(customer.getIdentityCode());
+        customer.setId(isCustomerExist.getId());
+        customer.setConfirm(true);
+        this.customerService.declareInformation((customer));
+        return new ResponseEntity<>("Đăng ký thành công.", HttpStatus.OK);
     }
     @PutMapping("/customer/{id}")
     public ResponseEntity<?> updateCustomer(){
@@ -64,6 +46,4 @@ public class CustomerController {
     public ResponseEntity<?> deleteCustomer(){
         return null;
     }
-
-
 }

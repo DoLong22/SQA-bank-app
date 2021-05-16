@@ -7,8 +7,10 @@ import java.util.List;
 
 @Service
 public interface CustomerService {
-    Customer regisCustomer(Customer customer) ;
-    public List<Customer> getCustomerList();
-    public Customer getCustomerById(int id);
-    public List<Customer> searchCustomers(String keyword);
+    Customer registerCustomer(Customer customer) ;
+    List<Customer> getCustomerList();
+    Customer getCustomerById(int id);
+    List<Customer> searchCustomers(String keyword);
+    Customer declareInformation(Customer customer) ;
+    Customer findCustomerByIdentityCode(String identityCode);
 }

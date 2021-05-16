@@ -16,7 +16,7 @@ import java.util.List;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "user")
+@Table(name = "customer")
 @Entity
 @Component
 public class Customer implements Serializable {
@@ -26,89 +26,65 @@ public class Customer implements Serializable {
     private int id;
 
     @Column(name = "email")
-//    @Email(message = "Email should be valid")
     private String email;
 
-    @Column(name = "password")
-//    @Email(message = "Email should be valid")
-    private String password;
-
     @Column(name = "masokh")
-//    @NotNull(message = "Customer code is require")
     private String masoKh;
 
     @Column(name="hoten")
-//    @NotBlank(message = "First name cannot be blank")
-    private String hoTen;
+    private String name;
 
     @Column(name = "ngaysinh")
-//    @NotNull(message = "Date of birth is require")
-    private String ngaySinh;
+    private String birthday;
 
     @Column(name="gioi_tinh")
-//    @NotBlank(message = "Gender cannot be blank")
-    private String gioiTinh;
+    private String gender;
 
     @Column(name="quoc_tich")
-//    @NotBlank(message = "First name cannot be blank")
     private String quocTich;
 
-    @Column(name="quequan")
-    private String queQuan;
+    @Column(name="que_quan")
+    private String hometown;
 
     @Column(name = "socmt")
-//    @NotNull(message = "Card number is require")
-    private String soCmt;
+    private String identityCode;
 
     @Column(name = "ngaycap")
-//    @NotNull(message = "Card number is require")
-    private String ngayCap;
+    private String identityCreatedAt;
 
     @Column(name = "noicap")
-    private String noiCap;
+    private String identityCreatedFrom;
 
     @Column(name="diachi")
-//    @NotBlank(message = "Home number cannot be blank")
-    private String diaChi;
+    private String address;
 
     @Column(name = "sodienthoai")
-    private String soDt;
+    private String phoneNumber;
 
     @Column(name = "tinh_trang_hon_nhan")
     private String ttHonnhan;
 
     @Column(name = "congviec")
-    private String congViec;
+    private String job;
 
     @Column(name = "tencongty")
-    private String congTy;
+    private String nameCompany;
 
     @Column(name = "phongban")
-    private String phongBan;
+    private String department;
 
     @Column(name = "thu_nhap")
-    private float thuNhap;
+    private String salary;
 
-    @Column(name = "tennguoithan1")
-    private String tenNguoiThan1;
+    @Column(name = "ten_nguoi_than1")
+    private String nameProtector;
 
-    @Column(name = "diachinguoithan1")
-    private String diaChiNguoiThan1;
+    @Column(name = "diachi_nguoithan1")
+    private String addressProtector;
 
     @Column(name = "sdtnguoithan1")
-    private String sdtNguoiThan1;
-
-    @Column(name = "tennguoithan2")
-    private String tenNguoiThan2;
-
-    @Column(name = "diachinguoithan2")
-    private String diaChiNguoiThan2;
-
-    @Column(name = "sdtnguoithan2")
-    private String sdtNguoiThan2;
+    private String phoneProtector;
 
     @Column(name="cam_ket")
-    private boolean camKet;
-
-
+    private boolean isConfirm;
 }

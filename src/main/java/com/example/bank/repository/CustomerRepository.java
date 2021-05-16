@@ -10,6 +10,5 @@ import com.example.bank.model.Customer;
 public interface CustomerRepository extends JpaRepository<Customer,Integer> {
     @Override
     Page<Customer> findAll(Pageable pageable);
-    Customer findByMasoKh(String idCustomer);
-    Customer findByEmailAndPassword(String email, String password);
+    Customer findByIdentityCode(String identityCode);
 }
