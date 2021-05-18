@@ -27,7 +27,7 @@ const rootState = {
     },
     informContact: {
       email: '',
-      phone: '',
+      phoneNumber: '',
       address: '',
       hometown: '',
     },
@@ -52,7 +52,7 @@ const rootState = {
     },
     informContact: {
       email: '',
-      phone: '',
+      phoneNumber: '',
       address: '',
       hometown: '',
     },

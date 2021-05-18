@@ -98,9 +98,15 @@
           </v-form>
           <v-card-actions>
             <v-spacer />
-            <v-btn elevation="2" color="success" @click="interestCalculate">Tính thử</v-btn>
+            <v-btn elevation="2" color="success" @click="interestCalculate"
+              >Tính thử</v-btn
+            >
             <v-spacer />
-            <v-btn elevation="2" color="primary" v-if="isBrrower" @click="requestBorrower"
+            <v-btn
+              elevation="2"
+              color="primary"
+              v-if="isBrrower"
+              @click="requestBorrower"
               >Xác nhận</v-btn
             >
             <v-spacer />
@@ -224,9 +230,7 @@ export default {
           interestType: this.interestType,
           numOfMonths: this.numOfMonths,
           dateOfLoan: formatDate(new Date()),
-          customer: {
-            id: this.$route.params.id,
-          },
+          customerId: this.$route.params.id,
         };
         try {
           await LoanService.requestLoan(data);

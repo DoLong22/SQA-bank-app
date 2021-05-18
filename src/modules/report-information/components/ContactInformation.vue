@@ -15,7 +15,7 @@
           <v-col cols="12" sm="6" md="5">
             <v-text-field
               outlined
-              v-model="informContact.phone"
+              v-model="informContact.phoneNumber"
               :counter="10"
               label="Số điện thoại *"
               required

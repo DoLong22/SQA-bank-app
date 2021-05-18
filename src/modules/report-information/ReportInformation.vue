@@ -95,7 +95,7 @@ export default {
         },
         informContact: {
           email: "",
-          phone: "",
+          phoneNumber: "",
           address: "",
           hometown: "",
         },

@@ -38,15 +38,15 @@ const requestLoan = ({
   interestType,
   numOfMonths,
   dateOfLoan,
-  customer,
+  customerId,
 }) => {
-  return axiosInstance.post('/loan', {
+  return axiosInstance.post(`/customers/${customerId}/loans`, {
     loan,
     interestRate,
     interestType,
     numOfMonths,
     dateOfLoan,
-    customer,
+    customerId,
   });
 };
 

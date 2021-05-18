@@ -9,7 +9,7 @@
             <v-text-field
               outlined
               v-model="informPersonal.name"
-              :readonly="informPersonal.name.length != ''"
+              :readonly="!(informPersonal.name === '')"
               :counter="255"
               label="Họ tên *"
               required
@@ -29,7 +29,7 @@
                 <v-text-field
                   outlined
                   v-model="informPersonal.birthday"
-                  :readonly="informPersonal.birthday.length != ''"
+                  :readonly="!(informPersonal.birthday === '')"
                   label="Ngày sinh *"
                   append-icon="mdi-calendar"
                   required
@@ -64,7 +64,7 @@
             <v-text-field
               outlined
               v-model="informPersonal.identityCode"
-              :readonly="informPersonal.identityCode.length != ''"
+              :readonly="!(informPersonal.identityCode === '')"
               :counter="12"
               label="Số chứng minh thư/thẻ căn cước * "
               required
@@ -117,7 +117,7 @@
             <v-text-field
               outlined
               v-model="informPersonal.job"
-              :readonly="informPersonal.job.length != ''"
+              :readonly="!(informPersonal.job === '')"
               :counter="255"
               label="Công việc *"
               required
@@ -128,7 +128,7 @@
             <v-select
               outlined
               v-model="informPersonal.salary"
-              :readonly="informPersonal.salary.length != ''"
+              :readonly="!(informPersonal.salary === '')"
               item-text="name"
               item-value="value"
               :items="salarys"
