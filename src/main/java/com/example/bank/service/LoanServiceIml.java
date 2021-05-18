@@ -1,21 +1,15 @@
 package com.example.bank.service;
 
-import com.example.bank.model.Customer;
-import com.example.bank.model.LoanInformation;
-import com.example.bank.model.PayInformation;
+import com.example.bank.model.*;
 import com.example.bank.repository.LoanRepository;
 import com.example.bank.repository.PayRepository;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.text.DecimalFormat;
-import java.text.NumberFormat;
+import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 import java.util.Optional;
-import java.util.logging.Logger;
 
 @Service
 public class LoanServiceIml implements LoanService {
@@ -76,27 +70,28 @@ public class LoanServiceIml implements LoanService {
     }
 
     @Override
-    public
-    PayInformation updatePayment(PayInformation payment) {
-        return this.payRepository.saveAndFlush(payment);
+    @Transactional
+    public PayInformation updatePayment(PayInformation payment) {
+
+        PayInformation pay = this.payRepository.saveAndFlush(payment);
+        return pay;
     }
 
     @Override
     public PayInformation calculateLoanByOriginal(LoanInformation loan, int countMonth) {
         PayInformation pay = new PayInformation();
         pay.setCountMonth(countMonth);
-        pay.setPayInformation(loan);
+        pay.setPayInformationFollowOriginal(loan);
         return pay;
     }
 
     @Override
     public List<PayInformation> calculateLoanByDecreasing(LoanInformation loan) {
         List<PayInformation> listPay = new ArrayList<>();
-        System.out.println(loan.getLoanPerMonth()+"");
         for (int i = 0; i<loan.getNumOfMonths(); i++){
             PayInformation pay = new PayInformation();
             pay.setCountMonth(i+1);
-            pay.setPayInformation(loan);
+            pay.setPayInformationFollowDecreasing(loan);
             listPay.add(pay);
         }
         return listPay;

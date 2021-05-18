@@ -15,6 +15,11 @@ public class LoanController {
     @Autowired
     private LoanService loanService;
 
+    @PostMapping(produces = "application/json", value = "")
+    public ResponseEntity<?> saveLoan(@RequestBody LoanInformation loanInformation){
+        return new ResponseEntity<>(this.loanService.saveLoan(loanInformation), HttpStatus.OK);
+    }
+
     @GetMapping(produces = "application/json", value = "")
     public ResponseEntity<?> getLoanByCustomer(@PathVariable int idCustomer){
         return new ResponseEntity<>(this.loanService.getLoans(idCustomer), HttpStatus.OK);

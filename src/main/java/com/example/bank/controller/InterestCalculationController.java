@@ -19,7 +19,6 @@ public class InterestCalculationController {
 
     @PostMapping(produces = "application/json", value ="/original")
     public ResponseEntity<?> calculationFollowOriginal(@RequestBody LoanInformation loan){
-        System.out.printf(loan.toString());
         if(loan.getInterestType() != 2){
             return new ResponseEntity<>("", HttpStatus.BAD_REQUEST);
         }
@@ -29,7 +28,6 @@ public class InterestCalculationController {
 
     @PostMapping(produces = "application/json", value="/decreasing")
     public ResponseEntity<?> calculationFollowDecreasing(@RequestBody LoanInformation loan){
-        System.out.printf(loan.toString());
         if(loan.getInterestType() != 1){
             return new ResponseEntity<>("", HttpStatus.BAD_REQUEST);
         }

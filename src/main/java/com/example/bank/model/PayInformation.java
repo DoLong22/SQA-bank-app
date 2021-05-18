@@ -23,22 +23,22 @@ public class PayInformation implements Serializable {
     private int id;
 
     @Column(name = "existence")
-    private float existence;
+    protected float existence;
 
     @Column(name = "date_of_pay")
-    private LocalDate dateOfPay;
+    protected LocalDate dateOfPay;
 
     @Column(name = "payment_date")
     private LocalDate paymentDate;
 
     @Column(name ="interest")
-    private float interest;
+    protected float interest;
 
     @Column(name="total_per_month")
-    private float totalPerMonth;
+    protected float totalPerMonth;
 
     @Column(name= "count_month")
-    private int countMonth;
+    protected int countMonth;
 
     @Column(name="is_pay")
     private boolean isPay;
@@ -49,24 +49,27 @@ public class PayInformation implements Serializable {
     @Column(name="loan_id")
     private int loanId;
 
-    public void setPayInformation(LoanInformation loan){
-        this.dateOfPay = loan.getDateOfLoan().plusMonths(this.countMonth);//ngay tra
+    public void setPayInformationFollowOriginal(LoanInformation loan){
+       this.dateOfPay = loan.getDateOfLoan().plusMonths(this.countMonth);//ngay tra
         float interestRate = loan.getInterestRate()/100; //lai suat
         float loanPerMonth = loan.getLoanPerMonth();  //no goc phai tra hang thang
         float loanTotal = loan.getLoan(); //no goc
 
-        if(loan.getInterestType()==2){ //tinh lai theo du no ban dau
-            this.existence = Math.round(loanTotal-loanPerMonth*this.countMonth); //so no con lai
-
-            this.interest = Math.round(loan.getLoan()*interestRate)/loan.getNumOfMonths(); //tien lai phai tra hang thang
-        }
-        else{ //tinh lai theo du no giam dan
-            this.existence = Math.round(loanTotal-loanPerMonth*this.countMonth); //so no con lai
-
-            this.interest = Math.round(
-                    (loan.getLoan()-(loanPerMonth*this.countMonth))*interestRate
-                            /loan.getNumOfMonths()); // tien lai phai tra
-        }
+        //tinh lai theo du no ban dau
+        this.existence = Math.round(loanTotal-loanPerMonth*this.countMonth); //so no con lai
+        this.interest = Math.round(loan.getLoan()*interestRate)/loan.getNumOfMonths(); //tien lai phai tra hang thang
+        this.totalPerMonth = Math.round(this.interest+loanPerMonth); // tinh tong tien phai tra hang thang
+    }
+    public void setPayInformationFollowDecreasing(LoanInformation loan){
+        this.dateOfPay = loan.getDateOfLoan().plusMonths(this.countMonth);//ngay tra
+        float interestRate = loan.getInterestRate()/100; //lai suat
+        float loanPerMonth = loan.getLoanPerMonth();  //no goc phai tra hang thang
+        float loanTotal = loan.getLoan(); //no goc
+         //tinh lai theo du no giam dan
+        this.existence = Math.round(loanTotal-loanPerMonth*this.countMonth); //so no con lai
+        this.interest = Math.round(
+                (loan.getLoan()-(loanPerMonth*this.countMonth))*interestRate
+                        /loan.getNumOfMonths()); // tien lai phai tra
         this.totalPerMonth = Math.round(this.interest+loanPerMonth); // tinh tong tien phai tra hang thang
     }
 }

@@ -32,18 +32,11 @@ public class CustomerController {
 
     @PutMapping(produces = "application/json", value="/report-information")
     public ResponseEntity<?> reportInformation(@RequestBody Customer customer){
+        System.out.println(customer.getPhoneNumber());
         Customer isCustomerExist = customerService.findCustomerByIdentityCode(customer.getIdentityCode());
         customer.setId(isCustomerExist.getId());
         customer.setConfirm(true);
         this.customerService.declareInformation((customer));
         return new ResponseEntity<>("Đăng ký thành công.", HttpStatus.OK);
-    }
-    @PutMapping("/customer/{id}")
-    public ResponseEntity<?> updateCustomer(){
-        return null;
-    }
-    @DeleteMapping("/customer/{id}")
-    public ResponseEntity<?> deleteCustomer(){
-        return null;
     }
 }
