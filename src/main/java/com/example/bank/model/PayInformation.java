@@ -49,8 +49,11 @@ public class PayInformation implements Serializable {
     @Column(name="loan_id")
     private int loanId;
 
+    private float loanPerMonth;
+
     public void setPayInformationFollowOriginal(LoanInformation loan){
        this.dateOfPay = loan.getDateOfLoan().plusMonths(this.countMonth);//ngay tra
+        this.loanPerMonth = loan.getLoanPerMonth();
         float interestRate = loan.getInterestRate()/100; //lai suat
         float loanPerMonth = loan.getLoanPerMonth();  //no goc phai tra hang thang
         float loanTotal = loan.getLoan(); //no goc
@@ -61,7 +64,8 @@ public class PayInformation implements Serializable {
         this.totalPerMonth = Math.round(this.interest+loanPerMonth); // tinh tong tien phai tra hang thang
     }
     public void setPayInformationFollowDecreasing(LoanInformation loan){
-        this.dateOfPay = loan.getDateOfLoan().plusMonths(this.countMonth);//ngay tra
+        this.dateOfPay = loan.getDateOfLoan().plusMonths(this.countMonth); //ngay tra
+        this.loanPerMonth = loan.getLoanPerMonth();
         float interestRate = loan.getInterestRate()/100; //lai suat
         float loanPerMonth = loan.getLoanPerMonth();  //no goc phai tra hang thang
         float loanTotal = loan.getLoan(); //no goc

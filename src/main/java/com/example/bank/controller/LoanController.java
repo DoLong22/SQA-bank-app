@@ -17,6 +17,7 @@ public class LoanController {
 
     @PostMapping(produces = "application/json", value = "")
     public ResponseEntity<?> saveLoan(@RequestBody LoanInformation loanInformation){
+        loanInformation.setLoanPerMonth(Math.round(loanInformation.getLoan()/loanInformation.getNumOfMonths()));
         return new ResponseEntity<>(this.loanService.saveLoan(loanInformation), HttpStatus.OK);
     }
 
