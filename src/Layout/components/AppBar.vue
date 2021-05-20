@@ -41,7 +41,7 @@ export default {
   data: () => ({
     options: [
       { title: "Đăng ký", link: "/registration" },
-      { title: "Khai báo thông tin", link: "/report-information" },
+      { title: "Khai báo thông tin", link: "http://localhost:3000/login" },
       { title: "Vay lãi", link: "/interest-loans" },
       { title: "Trả tiền cho ngân hàng", link: "/pay-the-loan" },
       { title: "Tính lãi", link: "/interest-calculation" },

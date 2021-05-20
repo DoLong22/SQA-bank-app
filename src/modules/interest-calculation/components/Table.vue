@@ -25,7 +25,7 @@ export default {
         },
         { text: "Ngày thanh toán", value: "dateOfPay" },
         { text: "Tiền nợ còn lại", value: "existence" },
-        { text: "Tiền nợ gốc", value: "loan.loanPerMonth" },
+        { text: "Tiền nợ gốc", value: "loanPerMonth" },
         { text: "Tiền lãi", value: "interest" },
         { text: "Tổng", value: "totalPerMonth" },
       ],

@@ -208,12 +208,13 @@ export default {
         try {
           if (this.interestType === 1) {
             this.dataPayment = await LoanService.calFollowDecreasing(data);
+            console.log(this.dataPayment);
             this.isDisplayTable = true;
             return;
           } else {
             this.isDisplayTable = false;
             const response = await LoanService.calFollowOriginal(data);
-            this.loanPerMonth = response.loan.loanPerMonth;
+            this.loanPerMonth = response.totalPerMonth - response.interest;
             this.totalPerMonth = response.totalPerMonth;
             this.interestPerMonth = response.interest;
           }
