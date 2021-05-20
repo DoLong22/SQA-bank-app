@@ -44,6 +44,7 @@ create table if not exists pay_information(
     is_pay boolean,
     customer_id int,
     loan_id int,
+    loan_per_month float,
     FOREIGN KEY (loan_id) REFERENCES loan_information(id)
 )
 

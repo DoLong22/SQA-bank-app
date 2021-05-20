@@ -23,16 +23,6 @@ public class CustomerServiceIml implements CustomerService {
     }
 
     @Override
-    public Customer getCustomerById(int id) {
-        return null;
-    }
-
-    @Override
-    public List<Customer> searchCustomers(String keyword) {
-        return null;
-    }
-
-    @Override
     public Customer declareInformation(Customer customer) {
         return this.customerRepository.saveAndFlush(customer);
     }

@@ -9,8 +9,6 @@ import java.util.List;
 public interface CustomerService {
     Customer registerCustomer(Customer customer) ;
     List<Customer> getCustomerList();
-    Customer getCustomerById(int id);
-    List<Customer> searchCustomers(String keyword);
     Customer declareInformation(Customer customer) ;
     Customer findCustomerByIdentityCode(String identityCode);
 }

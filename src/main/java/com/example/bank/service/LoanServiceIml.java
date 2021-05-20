@@ -6,7 +6,6 @@ import com.example.bank.repository.PayRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -70,7 +69,6 @@ public class LoanServiceIml implements LoanService {
     }
 
     @Override
-    @Transactional
     public PayInformation updatePayment(PayInformation payment) {
 
         PayInformation pay = this.payRepository.saveAndFlush(payment);
