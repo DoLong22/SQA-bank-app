@@ -49,6 +49,7 @@ public class PayInformation implements Serializable {
     @Column(name="loan_id")
     private int loanId;
 
+    @Column(name = "loan_per_month")
     private float loanPerMonth;
 
     public void setPayInformationFollowOriginal(LoanInformation loan){

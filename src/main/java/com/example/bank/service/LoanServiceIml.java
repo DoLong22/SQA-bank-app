@@ -55,6 +55,7 @@ public class LoanServiceIml implements LoanService {
                 payInformation = calculateLoanByOriginal(loanSaved,i+1);
                 payInformation.setIdCustomer(idCustomer);
                 payInformation.setLoanId(loanSaved.getId());
+                System.out.println(payInformation.getLoanPerMonth());
                 this.payRepository.save(payInformation);
             }
         }else{
